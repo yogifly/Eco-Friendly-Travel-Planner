@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='places.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/features">Home</a>
+            <a href="">Contacts</a>
+            <a href="">Info</a>
+        </nav>
+    </header>
+
+    
+    <div class="carousel">
+       
+        <div class="list">
+            <div class="item">
+                <img src="static/images/sundar.jpg">
+                <div class="content">
+                    <div class="author">Sundarbans</div>
+                    <div class="title">West Bengal</div>
+                    <div class="topic">The Mangrove Forest</div>
+                    <div class="des">
+                       
+                        A UNESCO World Heritage Site, this mangrove forest offers eco-lodges and promotes sustainable tourism through wildlife conservation efforts.
+
+                    </div>
+                    <div class="buttons">
+                        <a href="/hotels" class="btn">Hotels</a>
+                        <a href="/activities1" class="btn">Activities</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="item">
+                <img src="static/images/tamil.jpg">
+                <div class="content">
+                    <div class="author">Auroville</div>
+                    <div class="title">Tamil nadu</div>
+                    <div class="topic">Organic Nature of living</div>
+                    <div class="des">
+                        A model town for sustainable living, Auroville promotes organic farming, renewable energy, and eco-friendly architecture.
+                    </div>
+                    <div class="buttons">
+                        <a href="/hotels" class="btn">Hotels</a>
+                        <a href="/activities1" class="btn">Activities</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="static/images/rishikesh.jpg">
+                <div class="content">
+                    <div class="author">Rishikesh</div>
+                    <div class="title">Uttarakhand </div>
+                    <div class="topic">natural beautyof the Ganges</div>
+                    <div class="des">
+                        The highest mountain in the world, Mount Everest offers breathtaking views and is a bucket-list destination for climbers and adventurers.</div>
+                    <div class="buttons">
+                        <button>SEE MORE</button>
+                        <button>Activities</button>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="static/images/img4.jpg">
+                <div class="content">
+                    <div class="author">Iguazu Falls</div>
+                    <div class="title">Argentina/Brazil</div>
+                    <div class="topic">waterfall</div>
+                    <div class="des">
+                        A massive and awe-inspiring set of waterfalls that stretch across the border of Argentina and Brazil, Iguazu Falls is known for its sheer power and surrounding tropical jungle.
+                    </div>
+                    <div class="buttons">
+                        <button>SEE MORE</button>
+                        <button>Activities</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="thumbnail">
+            <div class="item">
+                <img src="static/images/img1.jpg">
+                <div class="content">
+                    <div class="title">
+                        Name Slider
+                    </div>
+                    <div class="description">
+                        Description
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="static/images/img2.jpg">
+                <div class="content">
+                    <div class="title">
+                        Name Slider
+                    </div>
+                    <div class="description">
+                        Description
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="static/images/img3.jpg">
+                <div class="content">
+                    <div class="title">
+                        Name Slider
+                    </div>
+                    <div class="description">
+                        Description
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="static/images/img4.jpg">
+                <div class="content">
+                    <div class="title">
+                        Name Slider
+                    </div>
+                    <div class="description">
+                        Description
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="arrows">
+            <button id="prev"><</button>
+            <button id="next">></button>
+        </div>
+       
+        <div class="time"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='places.js') }}"></script>
+</body>
+</html>

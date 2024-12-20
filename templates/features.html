@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='features.css') }}">
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+  <title>Eco Features</title>
+
+</head>
+<body>
+
+  <section>
+    <div class="container max-w-5xl mx-auto px-8">
+      <div class="card-wraper">
+        <div class="background" id="background"></div>
+
+        
+        <a href="javascript:void(0)" class="card relative group block p-2 h-full w-full">
+          <div class="card-main">
+            <div class="card-inner">
+              <div>
+                <h3>Carbon Footprint Calculation </h3>
+                <p>Understanding and Quantifying the Enviromental impact oh human activities to promote sustainability</p>
+                
+                <button onclick="window.location.href='/carbon';" class="btn">Explore More</button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        
+        <a href="javascript:void(0)" class="card relative group block p-2 h-full w-full">
+          <div class="card-main">
+            <div class="card-inner">
+              <div>
+                <h3>Places</h3>
+                <p>Eplore your self with the natural beauty of nature.</p>
+               
+                <button onclick="window.location.href='/places';" class="btn">Explore More</button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        
+        <a href="javascript:void(0)" class="card relative group block p-2 h-full w-full">
+          <div class="card-main">
+            <div class="card-inner">
+              <div>
+                <h3>Packing checklists</h3>
+                <p>Get Yourself updated</p>
+                
+                <button onclick="window.location.href='/checklist';" class="btn">Learn More</button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        
+        <a href="javascript:void(0)" class="card relative group block p-2 h-full w-full">
+          <div class="card-main">
+            <div class="card-inner">
+              <div>
+                <h3>Local Market</h3>
+                <p>Buy Some local Artifacts</p>
+               
+                <button onclick="window.location.href='/local';" class="btn">Learn More</button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+       
+        <a href="javascript:void(0)" class="card relative group block p-2 h-full w-full">
+          <div class="card-main">
+            <div class="card-inner">
+              <div>
+                <h3>Waste Management and Recycling </h3>
+                <p></p>
+               
+                <button onclick="window.location.href='/activities1';" class="btn">Learn More</button>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        
+        <a href="javascript:void(0)" class="card relative group block p-2 h-full w-full">
+          <div class="card-main">
+            <div class="card-inner">
+              <div>
+                <h3>Volunteering opportunities</h3>
+                <p>Voluntter yourself with the locals </p>
+                
+                <button onclick="window.location.href='/volunteer';" class="btn">Learn More</button>
+              </div>
+            </div>
+          </div>
+        </a>
+        
+      </div>
+    </div>
+  </section>
+
+  <script src="{{ url_for('static', filename='features.js') }}"></script>
+
+</body>
+</html>

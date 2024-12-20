@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Footprint Calculator</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='carbon.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Carbon Footprint Calculator</h1>
+        <form id="carbonForm">
+            <label for="distance">Distance (in km): </label>
+            <input type="number" id="distance" required><br><br>
+
+            <label for="transport">Transport Mode: </label>
+            <select id="transport" required>
+                <option value="flight">Flight</option>
+                <option value="train">Train</option>
+                <option value="car">Car</option>
+                <option value="bus">Bus</option>
+                <option value="bike">Bike</option>
+                <option value="electric_car">Electric Car</option>
+            </select><br><br>
+
+            <label for="roundTrip">Is this a round trip?</label>
+            <input type="checkbox" id="roundTrip"><br><br>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <h3 id="result"></h3>
+        <h4 id="alternative"></h4>
+        <h4 id="offset"></h4>
+    </div>
+
+    <script>
+        
+        document.getElementById('carbonForm').addEventListener('submit', async function(e) {
+            e.preventDefault();  
+            
+            const distance = document.getElementById('distance').value;
+            const transportMode = document.getElementById('transport').value;
+            const isRoundTrip = document.getElementById('roundTrip').checked;
+
+            const tripDistance = isRoundTrip ? distance * 2 : distance; 
+
+            try {
+                
+                const response = await fetch('/calculate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ distance: tripDistance, transportMode })
+                });
+
+                const data = await response.json();
+
+                
+                document.getElementById('result').innerText = `Your carbon footprint: ${data.carbonFootprint} kg CO2`;
+
+                
+                document.getElementById('alternative').innerText = `Greener Alternative: ${data.greenerAlternative}`;
+
+               
+                document.getElementById('offset').innerHTML = `
+                    To offset your carbon footprint, you could:
+                    <ul>
+                        <li>Plant ${data.carbonOffset.tree_planting} trees</li>
+                        <li>Support ${data.carbonOffset.renewable_energy} MWh of renewable energy</li>
+                        <li>Purchase ${data.carbonOffset.carbon_credits} carbon credits</li>
+                    </ul>
+                `;
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'Error calculating carbon footprint.';
+            }
+        });
+    </script>
+</body>
+</html>
