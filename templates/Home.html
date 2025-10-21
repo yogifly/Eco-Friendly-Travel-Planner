@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - EcoTravel Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .sidebar-link {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-link.active, .sidebar-link:hover {
+            background-color: #e6f0ff;
+            color: #2c5282;
+            border-left-color: #2c5282;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md flex-shrink-0 no-scrollbar overflow-y-auto hidden md:block">
+            <div class="p-6 text-center">
+                <div class="relative w-32 h-32 mx-auto group">
+                    <img id="profilePic" src="https://placehold.co/128x128/E2E8F0/4A5568?text=Add+Photo" alt="Profile Picture" class="w-full h-full rounded-full object-cover shadow-lg">
+                    <label for="profilePicInput" class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                        <i class="fas fa-camera text-2xl"></i>
+                    </label>
+                    <input type="file" id="profilePicInput" class="hidden" accept="image/*">
+                </div>
+                <h2 id="userName" class="mt-4 text-xl font-bold text-gray-700">Alex Wanderer</h2>
+                <p id="userEmail" class="text-sm text-gray-500">alex.wanderer@email.com</p>
+            </div>
+            <nav class="mt-6">
+                <button onclick="window.location.href='/features';" class="sidebar-link active flex items-center py-3 px-6">Learn More</button>
+                <a href="/features"  class="sidebar-link active flex items-center py-3 px-6">
+                    <i class="fas fa-compass w-6 text-center"></i><span class="ml-4">Explore</span>
+                </a>
+                <a href="#" data-target="plans" class="sidebar-link flex items-center py-3 px-6">
+                    <i class="fas fa-map-marked-alt w-6 text-center"></i><span class="ml-4">My Plans</span>
+                </a>
+                <a href="#" data-target="visited" class="sidebar-link flex items-center py-3 px-6">
+                    <i class="fas fa-history w-6 text-center"></i><span class="ml-4">Visited Places</span>
+                </a>
+                <a href="#" data-target="feedback" class="sidebar-link flex items-center py-3 px-6">
+                    <i class="fas fa-comment-dots w-6 text-center"></i><span class="ml-4">Feedback</span>
+                </a>
+                <a href="#" data-target="stats" class="sidebar-link flex items-center py-3 px-6">
+                    <i class="fas fa-chart-line w-6 text-center"></i><span class="ml-4">My Eco Stats</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto no-scrollbar">
+            <div class="max-w-4xl mx-auto">
+
+                <!-- Explore Section -->
+                <section id="explore" class="content-section fade-in">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h1 class="text-3xl font-bold mb-2">Explore Eco-Friendly Options</h1>
+                        <p class="text-gray-600 mb-6">Discover sustainable ways to travel and make a positive impact.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Feature Card -->
+                            <div class="bg-emerald-50 p-6 rounded-xl text-center hover:shadow-xl hover:scale-105 transition-all">
+                                <i class="fas fa-leaf text-3xl text-emerald-600 mb-3"></i>
+                                <h3 class="font-semibold text-lg">Find Eco Stays</h3>
+                                <p class="text-sm text-gray-500 mt-1">Book hotels and lodges that care for our planet.</p>
+                            </div>
+                            <!-- Feature Card -->
+                            <div class="bg-sky-50 p-6 rounded-xl text-center hover:shadow-xl hover:scale-105 transition-all">
+                                <i class="fas fa-hands-helping text-3xl text-sky-600 mb-3"></i>
+                                <h3 class="font-semibold text-lg">Volunteer</h3>
+                                <p class="text-sm text-gray-500 mt-1">Join local conservation and community projects.</p>
+                            </div>
+                            <!-- Feature Card -->
+                            <div class="bg-amber-50 p-6 rounded-xl text-center hover:shadow-xl hover:scale-105 transition-all">
+                                <i class="fas fa-shopping-basket text-3xl text-amber-600 mb-3"></i>
+                                <h3 class="font-semibold text-lg">Local Markets</h3>
+                                <p class="text-sm text-gray-500 mt-1">Support local artisans and taste authentic cuisine.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- My Plans Section -->
+                <section id="plans" class="content-section fade-in hidden">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h1 class="text-3xl font-bold mb-6">My Plan Details</h1>
+                        <div id="plan-list" class="space-y-4">
+                            <!-- Plans will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Visited Places Section -->
+                <section id="visited" class="content-section fade-in hidden">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h1 class="text-3xl font-bold mb-6">My Visited Plans</h1>
+                         <div id="visited-list" class="space-y-4">
+                            <!-- Visited plans will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Feedback Section -->
+                <section id="feedback" class="content-section fade-in hidden">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h1 class="text-3xl font-bold mb-2">Share Your Feedback</h1>
+                        <p class="text-gray-600 mb-6">We value your opinion. Help us improve our platform!</p>
+                        <form id="feedbackForm">
+                            <textarea id="feedbackText" rows="5" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition" placeholder="Tell us what you think..."></textarea>
+                            <button type="submit" class="mt-4 w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Submit Feedback</button>
+                        </form>
+                        <div id="feedback-success" class="mt-4 p-3 bg-green-100 text-green-800 rounded-lg hidden">Thank you for your feedback!</div>
+                    </div>
+                </section>
+
+                <!-- My Eco Stats Section -->
+                <section id="stats" class="content-section fade-in hidden">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg">
+                        <h1 class="text-3xl font-bold mb-6">My Eco Stats</h1>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                            <div class="bg-green-50 p-6 rounded-xl">
+                                <p class="text-3xl font-bold text-green-600">1,250 kg</p>
+                                <p class="text-gray-500 mt-1">Carbon Saved</p>
+                            </div>
+                            <div class="bg-blue-50 p-6 rounded-xl">
+                                <p class="text-3xl font-bold text-blue-600">5</p>
+                                <p class="text-gray-500 mt-1">Eco Trips Taken</p>
+                            </div>
+                            <div class="bg-yellow-50 p-6 rounded-xl">
+                                <p class="text-3xl font-bold text-yellow-600">85</p>
+                                <p class="text-gray-500 mt-1">Eco-Score</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const profilePicInput = document.getElementById('profilePicInput');
+            const profilePic = document.getElementById('profilePic');
+            const feedbackForm = document.getElementById('feedbackForm');
+            const feedbackSuccess = document.getElementById('feedback-success');
+            
+            // --- Sample Data ---
+            const upcomingPlans = [
+                {
+                    destination: "Rishikesh, Uttarakhand",
+                    dates: "Nov 15, 2025 - Nov 20, 2025",
+                    transport: "Train",
+                    footprint: "80 kg CO2",
+                    icon: "fas fa-train",
+                    color: "bg-blue-100 text-blue-800"
+                },
+                {
+                    destination: "Munnar, Kerala",
+                    dates: "Jan 10, 2026 - Jan 17, 2026",
+                    transport: "Electric Bus",
+                    footprint: "120 kg CO2",
+                    icon: "fas fa-bus-alt",
+                    color: "bg-green-100 text-green-800"
+                }
+            ];
+
+            const visitedPlans = [
+                {
+                    destination: "Coorg, Karnataka",
+                    dates: "Apr 05, 2025 - Apr 10, 2025",
+                    review: "Amazing coffee plantations and trekking trails. Stayed at an eco-friendly resort.",
+                    icon: "fas fa-coffee",
+                    color: "bg-yellow-100 text-yellow-800"
+                },
+                 {
+                    destination: "Goa",
+                    dates: "Dec 20, 2024 - Dec 28, 2024",
+                    review: "Explored the quiet beaches of South Goa and enjoyed local seafood.",
+                    icon: "fas fa-umbrella-beach",
+                    color: "bg-teal-100 text-teal-800"
+                }
+            ];
+
+            // --- Render Data Functions ---
+            function renderPlans() {
+                const planList = document.getElementById('plan-list');
+                planList.innerHTML = upcomingPlans.map(plan => `
+                    <div class="flex items-start p-4 border rounded-lg hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 ${plan.color} rounded-full flex items-center justify-center mr-4">
+                            <i class="${plan.icon} text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">${plan.destination}</h3>
+                            <p class="text-sm text-gray-500">${plan.dates}</p>
+                            <div class="mt-2 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-full ${plan.color}">
+                                Est. Footprint: ${plan.footprint}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            function renderVisited() {
+                const visitedList = document.getElementById('visited-list');
+                visitedList.innerHTML = visitedPlans.map(plan => `
+                    <div class="flex items-start p-4 border rounded-lg">
+                        <div class="w-12 h-12 ${plan.color} rounded-full flex items-center justify-center mr-4">
+                            <i class="${plan.icon} text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">${plan.destination}</h3>
+                            <p class="text-sm text-gray-500">${plan.dates}</p>
+                            <p class="mt-2 text-sm text-gray-600 italic">"${plan.review}"</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+
+            // --- Sidebar Navigation ---
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+
+                    const targetId = link.getAttribute('data-target');
+                    
+                    contentSections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.classList.remove('hidden');
+                        } else {
+                            section.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+
+            // --- Profile Picture Upload ---
+            profilePicInput.addEventListener('change', function(event) {
+                if (event.target.files && event.target.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        profilePic.src = e.target.result;
+                    }
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            });
+
+            // --- Feedback Form ---
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const feedbackText = document.getElementById('feedbackText').value;
+                if(feedbackText.trim() === '') {
+                    alert('Please enter your feedback before submitting.');
+                    return;
+                }
+                
+                feedbackSuccess.classList.remove('hidden');
+                document.getElementById('feedbackText').value = '';
+                
+                setTimeout(() => {
+                    feedbackSuccess.classList.add('hidden');
+                }, 3000);
+            });
+
+            // --- Initial Load ---
+            renderPlans();
+            renderVisited();
+        });
+    </script>
+
+</body>
+</html>
