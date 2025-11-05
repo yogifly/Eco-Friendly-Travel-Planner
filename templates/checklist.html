@@ -4,58 +4,602 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco-Friendly Packing Checklist</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='checklist.css') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "🌱";
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.1;
+            top: -20px;
+            right: 20px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.3);
+            height: 8px;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: white;
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .checklist {
+            padding: 30px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: "📋";
+            font-size: 24px;
+        }
+
+        .checklist-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .checklist-item:hover {
+            transform: translateX(5px);
+            border-color: #2ecc71;
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
+        }
+
+        .checklist-item.checked {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-color: #2ecc71;
+        }
+
+        .checklist-item.checked label {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        input[type="checkbox"]:checked {
+            background: #2ecc71;
+            border-color: #2ecc71;
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        label {
+            cursor: pointer;
+            font-size: 16px;
+            color: #2c3e50;
+            flex-grow: 1;
+            user-select: none;
+        }
+
+        .emoji {
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item.checked .emoji {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+
+        .add-item-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .add-item-title {
+            color: #2c3e50;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .add-item-input {
+            flex-grow: 1;
+            padding: 12px 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .add-item-input:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+        }
+
+        .emoji-input {
+            width: 60px;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .emoji-input:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .add-btn:active {
+            transform: translateY(0);
+        }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .reset-btn:active {
+            transform: translateY(0);
+        }
+
+        .completion-message {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 12px;
+            margin: 20px 30px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .completion-message.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .checklist-item {
+                padding: 12px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .emoji-input {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Eco-Friendly Packing Checklist</h1>
+            <h1>🌍 Eco-Friendly Packing Checklist</h1>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
         </header>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" id="checkedCount">0</div>
+                <div class="stat-label">Packed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="totalCount">10</div>
+                <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="percentageCount">0%</div>
+                <div class="stat-label">Complete</div>
+            </div>
+        </div>
+
+        <div class="completion-message" id="completionMessage">
+            🎉 Awesome! You're all set for an eco-friendly adventure! 🌿
+        </div>
+
         <section class="checklist">
             <h2>Materials Needed</h2>
-            <form>
-                <div class="checklist-item">
-                    <input type="checkbox" id="reusable-bag">
-                    <label for="reusable-bag">Reusable shopping bag</label>
+            <div id="checklistContainer">
+                <div class="checklist-item" data-id="1">
+                    <input type="checkbox" id="item-1">
+                    <label for="item-1">Reusable shopping bag</label>
+                    <span class="emoji">♻️</span>
+                    <button class="delete-btn" onclick="deleteItem(1)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="water-bottle">
-                    <label for="water-bottle">Reusable water bottle</label>
+                <div class="checklist-item" data-id="2">
+                    <input type="checkbox" id="item-2">
+                    <label for="item-2">Reusable water bottle</label>
+                    <span class="emoji">💧</span>
+                    <button class="delete-btn" onclick="deleteItem(2)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="biodegradable-soap">
-                    <label for="biodegradable-soap">Biodegradable soap</label>
+                <div class="checklist-item" data-id="3">
+                    <input type="checkbox" id="item-3">
+                    <label for="item-3">Biodegradable soap</label>
+                    <span class="emoji">🧼</span>
+                    <button class="delete-btn" onclick="deleteItem(3)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="eco-friendly-toothbrush">
-                    <label for="eco-friendly-toothbrush">Eco-friendly toothbrush</label>
+                <div class="checklist-item" data-id="4">
+                    <input type="checkbox" id="item-4">
+                    <label for="item-4">Eco-friendly toothbrush</label>
+                    <span class="emoji">🪥</span>
+                    <button class="delete-btn" onclick="deleteItem(4)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="sunscreen">
-                    <label for="sunscreen">Natural sunscreen</label>
+                <div class="checklist-item" data-id="5">
+                    <input type="checkbox" id="item-5">
+                    <label for="item-5">Natural sunscreen</label>
+                    <span class="emoji">☀️</span>
+                    <button class="delete-btn" onclick="deleteItem(5)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="snack-container">
-                    <label for="snack-container">Reusable snack containers</label>
+                <div class="checklist-item" data-id="6">
+                    <input type="checkbox" id="item-6">
+                    <label for="item-6">Reusable snack containers</label>
+                    <span class="emoji">🥗</span>
+                    <button class="delete-btn" onclick="deleteItem(6)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="camping-utensils">
-                    <label for="camping-utensils">Camping utensils</label>
+                <div class="checklist-item" data-id="7">
+                    <input type="checkbox" id="item-7">
+                    <label for="item-7">Camping utensils</label>
+                    <span class="emoji">🍴</span>
+                    <button class="delete-btn" onclick="deleteItem(7)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="cloth-towel">
-                    <label for="cloth-towel">Cloth towel</label>
+                <div class="checklist-item" data-id="8">
+                    <input type="checkbox" id="item-8">
+                    <label for="item-8">Cloth towel</label>
+                    <span class="emoji">🧺</span>
+                    <button class="delete-btn" onclick="deleteItem(8)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="first-aid-kit">
-                    <label for="first-aid-kit">First aid kit</label>
+                <div class="checklist-item" data-id="9">
+                    <input type="checkbox" id="item-9">
+                    <label for="item-9">First aid kit</label>
+                    <span class="emoji">🩹</span>
+                    <button class="delete-btn" onclick="deleteItem(9)">Delete</button>
                 </div>
-                <div class="checklist-item">
-                    <input type="checkbox" id="solar-charger">
-                    <label for="solar-charger">Solar charger</label>
+                <div class="checklist-item" data-id="10">
+                    <input type="checkbox" id="item-10">
+                    <label for="item-10">Solar charger</label>
+                    <span class="emoji">🔋</span>
+                    <button class="delete-btn" onclick="deleteItem(10)">Delete</button>
                 </div>
-            </form>
+            </div>
+
+            <div class="add-item-section">
+                <div class="add-item-title">➕ Add Custom Item</div>
+                <div class="input-group">
+                    <input type="text" id="newItemInput" class="add-item-input" placeholder="Enter item name..." maxlength="50">
+                    <input type="text" id="newEmojiInput" class="emoji-input" placeholder="🎒" maxlength="2">
+                </div>
+                <button class="add-btn" onclick="addNewItem()">Add Item</button>
+            </div>
+
+            <button class="reset-btn" onclick="resetChecklist()">🔄 Reset Checklist</button>
         </section>
     </div>
+
+    <script>
+        let itemIdCounter = 11;
+
+        function toggleCheck(id) {
+            const checkbox = document.getElementById(`item-${id}`);
+            if (checkbox) {
+                checkbox.checked = !checkbox.checked;
+                updateUI();
+            }
+        }
+
+        function addNewItem() {
+            const input = document.getElementById('newItemInput');
+            const emojiInput = document.getElementById('newEmojiInput');
+            const itemName = input.value.trim();
+            const emoji = emojiInput.value.trim() || '✨';
+
+            if (itemName === '') {
+                alert('Please enter an item name!');
+                return;
+            }
+
+            const container = document.getElementById('checklistContainer');
+            const newItem = document.createElement('div');
+            newItem.className = 'checklist-item';
+            newItem.dataset.id = itemIdCounter;
+            newItem.innerHTML = `
+                <input type="checkbox" id="item-${itemIdCounter}">
+                <label for="item-${itemIdCounter}">${itemName}</label>
+                <span class="emoji">${emoji}</span>
+                <button class="delete-btn" onclick="deleteItem(${itemIdCounter})">Delete</button>
+            `;
+
+            newItem.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('delete-btn')) {
+                    toggleCheck(this.dataset.id);
+                }
+            });
+
+            const checkbox = newItem.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener('change', updateUI);
+
+            container.appendChild(newItem);
+            
+            input.value = '';
+            emojiInput.value = '';
+            itemIdCounter++;
+            updateUI();
+
+            newItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function deleteItem(id) {
+            const item = document.querySelector(`.checklist-item[data-id="${id}"]`);
+            if (item) {
+                item.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    item.remove();
+                    updateUI();
+                }, 300);
+            }
+        }
+
+        function updateUI() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const items = document.querySelectorAll('.checklist-item');
+            let checkedCount = 0;
+
+            items.forEach((item) => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                if (checkbox && checkbox.checked) {
+                    item.classList.add('checked');
+                    checkedCount++;
+                } else {
+                    item.classList.remove('checked');
+                }
+            });
+
+            const totalCount = checkboxes.length;
+            const percentage = totalCount > 0 ? Math.round((checkedCount / totalCount) * 100) : 0;
+
+            document.getElementById('checkedCount').textContent = checkedCount;
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('percentageCount').textContent = percentage + '%';
+            document.getElementById('progressFill').style.width = percentage + '%';
+
+            const completionMessage = document.getElementById('completionMessage');
+            if (totalCount > 0 && checkedCount === totalCount) {
+                completionMessage.classList.add('show');
+            } else {
+                completionMessage.classList.remove('show');
+            }
+        }
+
+        function resetChecklist() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateUI();
+        }
+
+        // Initialize
+        document.querySelectorAll('.checklist-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('delete-btn')) {
+                    toggleCheck(this.dataset.id);
+                }
+            });
+        });
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateUI);
+        });
+
+        document.getElementById('newItemInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addNewItem();
+            }
+        });
+
+        updateUI();
+    </script>
 </body>
 </html>
