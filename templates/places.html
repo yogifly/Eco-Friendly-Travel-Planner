@@ -3,142 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='places.css') }}">
+    <title>Explore Places - EcoTravel Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .tab-link {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-link.active {
+            border-bottom-color: #1d4ed8;
+            color: #1d4ed8;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <nav>
-            <a href="/features">Home</a>
-            <a href="">Contacts</a>
-            <a href="">Info</a>
-        </nav>
-    </header>
+<body class="text-gray-800">
 
-    
-    <div class="carousel">
-       
-        <div class="list">
-            <div class="item">
-                <img src="static/images/sundar.jpg">
-                <div class="content">
-                    <div class="author">Sundarbans</div>
-                    <div class="title">West Bengal</div>
-                    <div class="topic">The Mangrove Forest</div>
-                    <div class="des">
-                       
-                        A UNESCO World Heritage Site, this mangrove forest offers eco-lodges and promotes sustainable tourism through wildlife conservation efforts.
-
-                    </div>
-                    <div class="buttons">
-                        <a href="/hotels" class="btn">Hotels</a>
-                        <a href="/activities1" class="btn">Activities</a>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="item">
-                <img src="static/images/tamil.jpg">
-                <div class="content">
-                    <div class="author">Auroville</div>
-                    <div class="title">Tamil nadu</div>
-                    <div class="topic">Organic Nature of living</div>
-                    <div class="des">
-                        A model town for sustainable living, Auroville promotes organic farming, renewable energy, and eco-friendly architecture.
-                    </div>
-                    <div class="buttons">
-                        <a href="/hotels" class="btn">Hotels</a>
-                        <a href="/activities1" class="btn">Activities</a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="static/images/rishikesh.jpg">
-                <div class="content">
-                    <div class="author">Rishikesh</div>
-                    <div class="title">Uttarakhand </div>
-                    <div class="topic">natural beautyof the Ganges</div>
-                    <div class="des">
-                        The highest mountain in the world, Mount Everest offers breathtaking views and is a bucket-list destination for climbers and adventurers.</div>
-                    <div class="buttons">
-                        <button>SEE MORE</button>
-                        <button>Activities</button>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="static/images/img4.jpg">
-                <div class="content">
-                    <div class="author">Iguazu Falls</div>
-                    <div class="title">Argentina/Brazil</div>
-                    <div class="topic">waterfall</div>
-                    <div class="des">
-                        A massive and awe-inspiring set of waterfalls that stretch across the border of Argentina and Brazil, Iguazu Falls is known for its sheer power and surrounding tropical jungle.
-                    </div>
-                    <div class="buttons">
-                        <button>SEE MORE</button>
-                        <button>Activities</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="container mx-auto p-4 md:p-8">
         
-        <div class="thumbnail">
-            <div class="item">
-                <img src="static/images/img1.jpg">
-                <div class="content">
-                    <div class="title">
-                        Name Slider
-                    </div>
-                    <div class="description">
-                        Description
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="static/images/img2.jpg">
-                <div class="content">
-                    <div class="title">
-                        Name Slider
-                    </div>
-                    <div class="description">
-                        Description
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="static/images/img3.jpg">
-                <div class="content">
-                    <div class="title">
-                        Name Slider
-                    </div>
-                    <div class="description">
-                        Description
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <img src="static/images/img4.jpg">
-                <div class="content">
-                    <div class="title">
-                        Name Slider
-                    </div>
-                    <div class="description">
-                        Description
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Discover Your Next Destination</h1>
+            <p class="text-lg text-gray-500 mt-2">Find eco-friendly places, stays, and rides for your journey.</p>
+        </header>
 
-        <div class="arrows">
-            <button id="prev"><</button>
-            <button id="next">></button>
+        <!-- Tabs Navigation -->
+        <div class="mb-8 border-b border-gray-200">
+            <nav class="flex flex-wrap -mb-px justify-center space-x-4 md:space-x-8" aria-label="Tabs">
+                <a href="#" data-target="places" class="tab-link active whitespace-nowrap py-4 px-1 text-base font-semibold">
+                    <i class="fas fa-mountain-sun mr-2"></i>Places to Visit
+                </a>
+                <a href="#" data-target="hotels" class="tab-link whitespace-nowrap py-4 px-1 text-base font-semibold text-gray-500 hover:text-blue-700">
+                    <i class="fas fa-hotel mr-2"></i>Book Hotels
+                </a>
+                <a href="#" data-target="rides" class="tab-link whitespace-nowrap py-4 px-1 text-base font-semibold text-gray-500 hover:text-blue-700">
+                    <i class="fas fa-bus-alt mr-2"></i>Book Rides
+                </a>
+                <a href="#" id="map-button" class="tab-link whitespace-nowrap py-4 px-1 text-base font-semibold text-gray-500 hover:text-blue-700">
+                    <i class="fas fa-map-marked-alt mr-2"></i>View on Map
+                </a>
+            </nav>
         </div>
-       
-        <div class="time"></div>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Places Section -->
+            <section id="places" class="content-section fade-in">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <!-- Place Card -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1587139290233-3c94527f4e3c?q=80&w=800&auto=format&fit=crop" alt="Munnar, Kerala" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold">Munnar, Kerala</h3>
+                            <p class="text-gray-600 mt-2 text-sm">Famous for its rolling tea plantations and lush green hills. A paradise for nature lovers.</p>
+                            <button class="mt-4 w-full bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors">Explore</button>
+                        </div>
+                    </div>
+                    <!-- Add more place cards as needed -->
+                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1596766799103-34e8d3570622?q=80&w=800&auto=format&fit=crop" alt="Rishikesh, Uttarakhand" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold">Rishikesh, Uttarakhand</h3>
+                            <p class="text-gray-600 mt-2 text-sm">The "Yoga Capital of the World," nestled in the Himalayas. Perfect for adventure and spirituality.</p>
+                            <button class="mt-4 w-full bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors">Explore</button>
+                        </div>
+                    </div>
+                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1619204734849-a2c573752c52?q=80&w=800&auto=format&fit=crop" alt="Coorg, Karnataka" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold">Coorg, Karnataka</h3>
+                            <p class="text-gray-600 mt-2 text-sm">Known as the "Scotland of India," offering misty landscapes and aromatic coffee plantations.</p>
+                            <button class="mt-4 w-full bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors">Explore</button>
+                        </div>
+                    </div>
+                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1593633399068-acb6bca5b331?q=80&w=800&auto=format&fit=crop" alt="Spiti Valley, Himachal" class="w-full h-48 object-cover">
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold">Spiti Valley, Himachal</h3>
+                            <p class="text-gray-600 mt-2 text-sm">A high-altitude desert mountain valley. Known for its ancient monasteries and stunning landscapes.</p>
+                            <button class="mt-4 w-full bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-600 transition-colors">Explore</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hotels Section -->
+            <section id="hotels" class="content-section fade-in hidden">
+                <div class="space-y-6">
+                    <!-- Hotel Card -->
+                    <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center gap-6">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop" alt="Eco Lodge Munnar" class="w-full md:w-48 h-48 md:h-36 rounded-xl object-cover">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold">Eco Lodge, Munnar</h3>
+                            <p class="text-gray-500 text-sm">Sustainable stay amidst tea gardens.</p>
+                            <div class="flex items-center mt-2">
+                                <span class="text-yellow-400"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+                                <span class="text-sm ml-2 text-gray-600">4.2 (150 reviews)</span>
+                            </div>
+                        </div>
+                        <button class="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Book Now</button>
+                    </div>
+                    <!-- Add more hotel cards -->
+                </div>
+            </section>
+
+            <!-- Rides Section -->
+            <section id="rides" class="content-section fade-in hidden">
+                <div class="space-y-6">
+                    <!-- Ride Card -->
+                    <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center gap-6">
+                        <div class="text-blue-500 text-4xl w-16 text-center"><i class="fas fa-train"></i></div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold">Vistadome Train to the Hills</h3>
+                            <p class="text-gray-500 text-sm">Scenic journey with panoramic views. Low carbon footprint.</p>
+                            <span class="mt-2 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">Eco-Friendly</span>
+                        </div>
+                        <button class="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Book Tickets</button>
+                    </div>
+                     <!-- Ride Card -->
+                    <div class="bg-white p-6 rounded-2xl shadow-lg flex flex-col md:flex-row items-center gap-6">
+                        <div class="text-green-500 text-4xl w-16 text-center"><i class="fas fa-charging-station"></i></div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold">Shared Electric Cab</h3>
+                            <p class="text-gray-500 text-sm">Travel within the city with zero emissions. Economical and green.</p>
+                            <span class="mt-2 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-100 text-green-800">Zero Emissions</span>
+                        </div>
+                        <button class="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors">Find a Ride</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Back to profile link -->
+        <div class="text-center mt-12">
+            <a href="/profile" class="text-blue-600 hover:underline">&larr; Back to Profile</a>
+        </div>
     </div>
 
-    <script src="{{ url_for('static', filename='places.js') }}"></script>
+    <!-- Map Modal -->
+    <div id="map-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl h-5/6 relative">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 z-10">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <div class="w-full h-full rounded-2xl overflow-hidden">
+                <!-- Replace with your interactive map embed code -->
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158857.8145265243!2d-0.2416802526188463!3d51.52873519803884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2sin!4v1668611252000!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const mapButton = document.getElementById('map-button');
+            const mapModal = document.getElementById('map-modal');
+            const closeModalButton = document.getElementById('close-modal');
+
+            // --- Tab Navigation ---
+            tabLinks.forEach(link => {
+                if (link.id !== 'map-button') { // Exclude map button from tab logic
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+
+                        // Style active tab link
+                        tabLinks.forEach(l => l.classList.remove('active', 'text-blue-700'));
+                        link.classList.add('active');
+                        link.classList.add('text-blue-700');
+
+                        // Show corresponding content section
+                        const targetId = link.getAttribute('data-target');
+                        contentSections.forEach(section => {
+                            section.style.display = section.id === targetId ? 'block' : 'none';
+                        });
+                    });
+                }
+            });
+
+            // --- Map Modal Logic ---
+            function openModal() {
+                mapModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+
+            function closeModal() {
+                mapModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+
+            mapButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+
+            closeModalButton.addEventListener('click', closeModal);
+            mapModal.addEventListener('click', (e) => {
+                if (e.target === mapModal) { // Close if clicking on the overlay
+                    closeModal();
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                 if (e.key === 'Escape' && !mapModal.classList.contains('hidden')) {
+                     closeModal();
+                 }
+            });
+        });
+    </script>
+
 </body>
 </html>
